@@ -1,59 +1,34 @@
 #include "binary_trees.h"
 
 /**
- * binary_tree_levelorder - traverst a binary tree using level-order traverse
- * @tree: tree to traverse
- * @func: pointer to a function to call for each node
- */
-void binary_tree_levelorder(const binary_tree_t *tree, void (*func)(int))
-{
-	size_t level, maxlevel;
-
-	if (!tree || !func)
-		return;
-
-	maxlevel = binary_tree_height(tree) + 1;
-
-	for (level = 1; level <= maxlevel; level++)
-		btlo_helper(tree, func, level);
-}
-
-/**
- * btlo_helper - goes through a binary tree using post-order traverse
- * @tree: tree to traverse
- * @func: pointer to a function to call for each node
- * @level: the level of the tree to call func upon
- */
-void btlo_helper(const binary_tree_t *tree, void (*func)(int), size_t level)
-{
-	if (!tree)
-		return;
-
-	if (level == 1)
-		func(tree->n);
-	else if (level > 1)
-	{
-		btlo_helper(tree->left, func, level - 1);
-		btlo_helper(tree->right, func, level - 1);
-	}
-}
-
-/**
- * binary_tree_height - measures the height of a binary tree
- * @tree: tree to measure the height of
+ * binary_tree_is_bst - checks if a binary tree is a valid Binary Search Tree
+ * @tree: pointer to the root node of the tree to check
  *
- * Return: height of the tree
- *         0 if tree is NULL
+ * Return: 1 if valid BST, 0 otherwise
  */
-size_t binary_tree_height(const binary_tree_t *tree)
+int binary_tree_is_bst(const binary_tree_t *tree)
 {
-	size_t height_l = 0;
-	size_t height_r = 0;
-
 	if (!tree)
 		return (0);
 
-	height_l = tree->left ? 1 + binary_tree_height(tree->left) : 0;
-	height_r = tree->right ? 1 + binary_tree_height(tree->right) : 0;
-	return (height_l > height_r ? height_l : height_r);
+	return (bst_helper(tree, NULL, NULL));
+}
+
+/**
+ * bst_helper - helper function to check if a tree is a valid BST
+ * @tree: pointer to the root node of the tree
+ * @min: pointer to the minimum value in the tree
+ * @max: pointer to the maximum value in the tree
+ *
+ * Return: 1 if valid BST, 0 otherwise
+ */
+int bst_helper(const binary_tree_t *tree, const binary_tree_t *min, const binary_tree_t *max)
+{
+	if (!tree)
+		return (1);
+
+	if ((min && tree->n <= min->n) || (max && tree->n >= max->n))
+		return (0);
+
+	return (bst_helper(tree->left, min, tree) && bst_helper(tree->right, tree, max));
 }
