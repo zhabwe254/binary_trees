@@ -21,16 +21,20 @@ typedef struct binary_tree_s avl_t;
 typedef struct binary_tree_s heap_t;
 
 /* Print Function */
+/* Task 0 */
 void binary_tree_print(const binary_tree_t *);
 
 /* Task 1 */
 binary_tree_t *binary_tree_node(binary_tree_t *parent, int value);
 
+/* Task 1 */
+binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value);
+
 /* Task 2 */
-void binary_tree_delete(binary_tree_t *tree);
+binary_tree_t *binary_tree_insert_right(binary_tree_t *parent, int value);
 
 /* Task 3 */
-int binary_tree_is_leaf(const binary_tree_t *node);
+void binary_tree_delete(binary_tree_t *tree);
 
 /* Task 4 */
 int binary_tree_is_root(const binary_tree_t *node);
@@ -39,10 +43,10 @@ int binary_tree_is_root(const binary_tree_t *node);
 size_t binary_tree_height(const binary_tree_t *tree);
 
 /* Task 6 */
-size_t binary_tree_depth(const binary_tree_t *tree);
+void binary_tree_preorder(const binary_tree_t *tree, void (*func)(int));
 
 /* Task 7 */
-size_t binary_tree_size(const binary_tree_t *tree);
+void binary_tree_inorder(const binary_tree_t *tree, void (*func)(int));
 
 /* Task 8 */
 size_t binary_tree_leaves(const binary_tree_t *tree);
