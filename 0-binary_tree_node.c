@@ -18,10 +18,15 @@ new->n = value;
 new->left = new->right = NULL;
 new->parent = parent;
 if (new->parent == NULL) /* root */
-return new;
+{
+return (new);
 if (new->n < parent->n)
+{
 parent->left = new;
+}
 else
+{
 parent->right = new;
-return new;
+}
+return (new);
 }
