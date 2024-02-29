@@ -1,47 +1,63 @@
 #include "binary_trees.h"
 
 /**
- * binary_trees_ancestor - Finds the lowest common ancestor of two nodes
- * @first: Pointer to the first node
- * @second: Pointer to the second node
+ * binary_trees_ancestor - finds the lowest common ancestor of two nodes
+ * @first: a pointer to the first node to find the ancestor
+ * @second: a pointer to the second node to find the ancestor
  *
- * Return: Pointer to the lowest common ancestor node
+ * Return: pointer to the ancestor node
+ *         NULL if there is no ancestor node
  */
-binary_tree_t *binary_trees_ancestor(const binary_tree_t *first, const binary_tree_t *second)
+binary_tree_t *binary_trees_ancestor(const binary_tree_t *first,
+				     const binary_tree_t *second)
 {
+	size_t depth_first, depth_second;
+
 	if (!first || !second)
-	return (NULL);
+		return (NULL);
 
-	if (first == second)
+	depth_first = binary_tree_depth(first);
+	depth_second = binary_tree_depth(second);
+
+	while (depth_first > depth_second)
+	{
+		first = first->parent;
+		depth_first--;
+	}
+	while (depth_second > depth_first)
+	{
+		second = second->parent;
+		depth_second--;
+	}
+	while (first && second)
+	{
+		if (first == second)
+			return ((binary_tree_t *)first);
+		first = first->parent;
+		second = second->parent;
+	}
 	return ((binary_tree_t *)first);
-
-	if (binary_tree_is_descendant(first, second))
-		return ((binary_tree_t *)second);
-
-	if (binary_tree_is_descendant(second, first))
-	return ((binary_tree_t *)first);
-
-	return (binary_trees_ancestor(first->parent, second));
 }
 
 /**
- * binary_tree_is_descendant - Checks if a node is a descendant of another
- * @root: Pointer to the potential ancestor node
- * @node: Pointer to the potential descendant node
+ * binary_tree_depth - measures the depth of a node in a binary tree
+ * @tree: node to calculate the depth of
  *
- * Return: 1 if node is descendant of root, 0 otherwise
+ * Return: depth of the node
+ *         0 if tree is NULL
  */
-int binary_tree_is_descendant(const binary_tree_t *root, const binary_tree_t *node)
+size_t binary_tree_depth(const binary_tree_t *tree)
 {
-	if (!root || !node)
+	size_t depth = 0;
+
+	if (!tree)
 		return (0);
 
-	while (node != NULL)
-{
-	if (node == root)
-		return (1);
-	node = node->parent;
+	while (tree->parent)
+	{
+		depth++;
+		tree = tree->parent;
 	}
-	return (0);
-}
 
+	return (depth);
+}

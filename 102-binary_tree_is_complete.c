@@ -1,33 +1,28 @@
 #include "binary_trees.h"
 
 /**
- * binary_tree_is_complete - Checks if a binary tree is complete
- * @tree: Pointer to the root node of the tree to check
- * Return: 1 if complete, 0 otherwise
+ * binary_tree_is_avl - checks if a binary tree is a valid AVL Tree
+ * @tree: pointer to the root node of the tree to check
+ *
+ * Return: 1 if valid AVL Tree, 0 otherwise
  */
-int binary_tree_is_complete(const binary_tree_t *tree)
+int binary_tree_is_avl(const binary_tree_t *tree)
 {
-	if (!tree)
-		return (0);
+	int height_diff;
 
-	return (binary_tree_is_complete_util(tree, 0, binary_tree_size(tree)));
-}
-
-/**
- * binary_tree_is_complete_util - Utility function to check if a binary tree is complete
- * @tree: Pointer to the root node of the tree to check
- * @index: Index of the current node
- * @size: Total number of nodes in the tree
- * Return: 1 if complete, 0 otherwise
- */
-int binary_tree_is_complete_util(const binary_tree_t *tree, size_t index, size_t size)
-{
 	if (!tree)
 		return (1);
 
-	if (index >= size)
+	if (!binary_tree_is_bst(tree))
 		return (0);
 
-	return (binary_tree_is_complete_util(tree->left, 2 * index + 1, size) &&
-			binary_tree_is_complete_util(tree->right, 2 * index + 2, size));
+	height_diff = binary_tree_height(tree->left) - binary_tree_height(tree->right);
+
+	if (height_diff > 1 || height_diff < -1)
+		return (0);
+
+	if (!binary_tree_is_avl(tree->left) || !binary_tree_is_avl(tree->right))
+		return (0);
+
+	return (1);
 }

@@ -1,34 +1,25 @@
 #include "binary_trees.h"
-#include "queue.h"
 
 /**
- * binary_tree_levelorder - Goes through a binary tree using level-order
- * @tree: Pointer to the root node of the tree to traverse
- * @func: Pointer to a function to call for each node
+ * binary_tree_is_bst - checks if a binary tree is a valid Binary Search Tree
+ * @tree: pointer to the root node of the tree to check
+ *
+ * Return: 1 if valid BST, 0 otherwise
  */
-void binary_tree_levelorder(const binary_tree_t *tree, void (*func)(int))
+int binary_tree_is_bst(const binary_tree_t *tree)
 {
-	if (!tree || !func)
-		return;
+	if (!tree)
+		return (0);
 
-	queue_t *queue = queue_create();
-	if (!queue)
-		return;
+	if (tree->left && tree->left->n >= tree->n)
+		return (0);
 
-	queue_push(queue, (void *)tree);
+	if (tree->right && tree->right->n <= tree->n)
+		return (0);
 
-	while (!queue_is_empty(queue))
-	{
-		const binary_tree_t *current = (const binary_tree_t *)queue_front(queue);
-		queue_pop(queue);
+	if (!binary_tree_is_bst(tree->left) || !binary_tree_is_bst(tree->right))
+		return (0);
 
-		func(current->n);
-
-		if (current->left)
-			queue_push(queue, (void *)current->left);
-		if (current->right)
-			queue_push(queue, (void *)current->right);
-	}
-
-	queue_delete(queue);
+	return (1);
 }
+
