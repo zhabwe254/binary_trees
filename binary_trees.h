@@ -5,10 +5,13 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
+<<<<<<< HEAD
+=======
 #include <string.h>
 #include <unistd.h>
 #include <math.h>
 #include <limits.h>
+>>>>>>> 5961af32777a6bed128113bb837775ce506bde2f
 
 /* Basic Binary Tree Structure */
 typedef struct binary_tree_s {
