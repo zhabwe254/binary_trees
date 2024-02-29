@@ -10,6 +10,14 @@ typedef struct binary_tree_s {
 	struct binary_tree_s *right;
 	struct binary_tree_s *parent;
 } binary_tree_t;
+typedef struct binary_tree_s binary_tree_t;
+typedef struct binary_tree_s bst_t;
+typedef struct binary_tree_s avl_t;
+typedef struct binary_tree_s heap_t;
+
+/* binary_tree_print.c */
+void binary_tree_print(const binary_tree_t *);
+
 
 /* Binary Search Tree Structure */
 typedef struct binary_tree_s bst_t;
@@ -110,6 +118,18 @@ bst_t *bst_remove(bst_t *root, int value);
 
 /* Task 29 */
 void binary_tree_print(const binary_tree_t *);
+
+/* helper functions */
+int _pow_recursion(int x, int y);
+binary_tree_t *bta_helper(binary_tree_t *root, const binary_tree_t *first,
+			  const binary_tree_t *second);
+void btlo_helper(const binary_tree_t *tree, void (*func)(int), size_t level);
+int btic_helper(const binary_tree_t *tree, size_t index, size_t size);
+int btib_helper(const binary_tree_t *tree, int low, int hi);
+bst_t *bst_min_val(bst_t *root);
+int btia_helper(const binary_tree_t *tree, int low, int hi);
+int btih_helper(const binary_tree_t *tree);
+void sata_helper(avl_t **root, int *array, size_t lo, size_t hi);
 
 #endif /* BINARY_TREES_H */
 
